@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="StratosAccounts.jnlp">
+  <information>
+    <title>StratosAccounts</title>
+    <vendor>Fausto</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="StratosAccounts.jar" size="2511" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="800" height="600" main-class="controller.Main"  name="StratosAccounts" />
+  <update check="always"/>
+</jnlp>
