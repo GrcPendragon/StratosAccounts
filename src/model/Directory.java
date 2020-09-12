@@ -8,15 +8,17 @@ import java.util.Objects;
  */
 public class Directory {
     private String pagina;
+    private String usuario;
     private String correo;
     private String pass;
 
-    public Directory(String pagina, String correo, String pass) {
+    public Directory(String pagina, String usuario, String correo, String pass) {
         this.pagina = pagina;
+        this.usuario = usuario;
         this.correo = correo;
         this.pass = pass;
     }
-
+    
     public String getPagina() {
         return pagina;
     }
@@ -25,6 +27,14 @@ public class Directory {
         this.pagina = pagina;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+    
     public String getCorreo() {
         return correo;
     }
@@ -70,6 +80,4 @@ public class Directory {
         }
         return true;
     }
-    
-    
 }

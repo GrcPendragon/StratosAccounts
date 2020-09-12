@@ -11,7 +11,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -20,6 +23,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Directory;
 
 /**
@@ -32,12 +37,6 @@ public class DirectoryController implements Initializable {
     @FXML
     private Button btnIngresar;
     @FXML
-    private TextField txtPagina;
-    @FXML
-    private PasswordField txtPass;
-    @FXML
-    private TextField txtCorreo;
-    @FXML
     private TableView<Directory> tblDirectory;
     @FXML
     private TableColumn colPagina;
@@ -45,7 +44,9 @@ public class DirectoryController implements Initializable {
     private TableColumn colCorreo;
     @FXML
     private TableColumn colPass;
-
+    @FXML
+    private TableColumn colUsuario;
+    
     private ObservableList<Directory> directorio;
 
     /**
@@ -56,23 +57,32 @@ public class DirectoryController implements Initializable {
         directorio = FXCollections.observableArrayList();
 
         this.colPagina.setCellValueFactory(new PropertyValueFactory("pagina"));
+        this.colUsuario.setCellValueFactory(new PropertyValueFactory("usuario"));
         this.colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
         this.colPass.setCellValueFactory(new PropertyValueFactory("pass"));
+        this.tblDirectory.setItems(directorio);
     }
 
     @FXML
     private void click(ActionEvent event) {
-        String pagina = this.txtPagina.getText();
-        String correo = this.txtCorreo.getText();
-        String pass = this.txtPass.getText();
-
-        Directory registro = new Directory(pagina, correo, pass);
         Alert alert = new Alert(Alert.AlertType.ERROR);
         
         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/InsertDataView.fxml"));
+            Parent root = loader.load();
+            InsertDataController insertar = loader.getController();
+            
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+            
+            Directory registro = insertar.getRegistro();
+            
             if (!this.directorio.contains(registro)) {
                 this.directorio.add(registro);
-                this.tblDirectory.setItems(directorio);
+                this.tblDirectory.refresh();
             } else {
                 alert.setHeaderText(null);
                 alert.setTitle("Error!");
