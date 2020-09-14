@@ -17,11 +17,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -37,6 +39,10 @@ public class DirectoryController implements Initializable {
     @FXML
     private Button btnIngresar;
     @FXML
+    private Button btnModificar;
+    @FXML
+    private Button btnEliminar;
+    @FXML
     private TableView<Directory> tblDirectory;
     @FXML
     private TableColumn colPagina;
@@ -48,6 +54,7 @@ public class DirectoryController implements Initializable {
     private TableColumn colUsuario;
     
     private ObservableList<Directory> directorio;
+    
 
     /**
      * Initializes the controller class.
@@ -68,32 +75,68 @@ public class DirectoryController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/InsertDataView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DataView.fxml"));
             Parent root = loader.load();
-            InsertDataController insertar = loader.getController();
-            
+            DataController insertar = loader.getController();
+            insertar.setDirectorio(directorio);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.showAndWait();
             
-            Directory registro = insertar.getRegistro();
             
-            if (!this.directorio.contains(registro)) {
-                this.directorio.add(registro);
-                this.tblDirectory.refresh();
-            } else {
-                alert.setHeaderText(null);
-                alert.setTitle("Error!");
-                alert.setContentText("El registro ya existe.");
-                alert.show();
-            }
+            this.directorio = insertar.getDirectorio();
+            this.tblDirectory.refresh();
+            
         } catch (Exception e) {
             alert.setHeaderText(null);
             alert.setTitle("Error!");
             alert.setContentText(e.toString());
             alert.show();
+        }
+    }
+
+    @FXML
+    private void selected(MouseEvent event) {
+        boolean desactivado = true;
+        if (tblDirectory.getSelectionModel().getSelectedItem() != null) {
+            desactivado = false;
+        }
+        btnModificar.setDisable(desactivado);
+        btnEliminar.setDisable(desactivado);
+    }
+
+    @FXML
+    private void clickUpdate(ActionEvent event) {
+        try {
+            Directory registro = this.tblDirectory.getSelectionModel().getSelectedItem();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DataView.fxml"));
+            Parent root = loader.load();
+            DataController modificar = loader.getController();
+            modificar.initDatos(directorio, registro);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+            
+            this.tblDirectory.refresh();
+        } catch (Exception e) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR,e.getMessage());
+        }
+    }
+
+    @FXML
+    private void clickDelete(ActionEvent event) {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION,
+                "¿Esta seguro que desea eliminar este registro?",ButtonType.YES,ButtonType.NO);
+        alerta.setHeaderText(null);
+        alerta.showAndWait();
+        Directory registro = this.tblDirectory.getSelectionModel().getSelectedItem();
+        if (alerta.getResult() == ButtonType.YES) {
+            this.directorio.remove(registro);
+            this.tblDirectory.refresh();
         }
     }
 

@@ -53,7 +53,7 @@ public class Directory {
 
     @Override
     public int hashCode() {
-        int hash = 3;
+        int hash = 7;
         return hash;
     }
 
@@ -75,9 +75,7 @@ public class Directory {
         if (!Objects.equals(this.correo, other.correo)) {
             return false;
         }
-        if (!Objects.equals(this.pass, other.pass)) {
-            return false;
-        }
         return true;
     }
+
 }
