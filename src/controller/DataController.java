@@ -6,7 +6,10 @@
 package controller;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.DBConnector;
 import model.Directory;
 
 /**
@@ -44,12 +48,18 @@ public class DataController implements Initializable {
 
     private Alert alerta;
 
+    private DBConnector db;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        try {
+            db = new DBConnector();
+        } catch (SQLException e) {
+            alerta = new Alert(Alert.AlertType.ERROR,e.getMessage());
+            alerta.showAndWait();
+        }
     }
 
     public void initDatos(ObservableList<Directory> directorio, Directory registro) {
@@ -68,6 +78,7 @@ public class DataController implements Initializable {
         String correo = this.txtCorreo.getText();
         String pass = this.txtPass.getText();
         Stage stage;
+        String sql = "";        
 
         try {
             if (isEmptyRegister(pagina, usuario, correo, pass)) {
@@ -88,6 +99,7 @@ public class DataController implements Initializable {
                     stage.close();
                 } else {
                     //Ingresar
+                    sql = "INSERT INTO cuentas VALUES(NULL,'"+pagina+"','"+usuario+"','"+correo+"','"+pass+"')";
                     registro = new Directory(pagina, usuario, correo, pass);
                     if (this.directorio.contains(registro)) {
                         alerta = new Alert(Alert.AlertType.ERROR);
@@ -96,13 +108,14 @@ public class DataController implements Initializable {
                         alerta.setContentText("El registro ya existe.");
                         alerta.show();
                     } else {
+                        db.insert(sql);
                         this.directorio.add(registro);
                         stage = (Stage) this.btnAceptar.getScene().getWindow();
                         stage.close();
                     }
                 }
             }
-
+            db.connectionClose();
         } catch (Exception e) {
             alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setHeaderText(null);
@@ -110,6 +123,7 @@ public class DataController implements Initializable {
             alerta.setContentText(e.getMessage());
             alerta.show();
         }
+        
     }
 
     @FXML

@@ -1,0 +1,23 @@
+[33mcommit 6ddf49c4f9cb75e1f577eb11ac422ee7974e304b[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: FAUSTO ISRAEL GARCIA GARCIA <fausto.garcia@alumnos.udg.mx>
+Date:   Sun Sep 13 22:25:11 2020 -0500
+
+    Se integran las funciones de eliminar y modificar a sus respectivos botones, se reutiliza la ventana modal para insertar, cambiandole el nombre a dicha View y a su respectivo controlador. Se mejoró parte del codigo del controlador del Directory además de mejoras al codigo para insertar registros. Se espera realizar mejoras para el modificar ya que el codigo no parece ser el más optimo. Además se planea utilizar ya el uso de archivos para guardar sesion, y el uso de la base de datos desde la web.
+
+[33mcommit 6d84ac79d8cd6bd87254b560c76e920b87884336[m[33m ([m[1;31mrepo/master[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: FAUSTO ISRAEL GARCIA GARCIA <fausto.garcia@alumnos.udg.mx>
+Date:   Fri Sep 11 20:03:29 2020 -0500
+
+    Se integra una ventana modal con el funcionamiento de insertar los datos en la tabla. Cuenta con su propio controlador. Se espera modificar dicha ventana para que tenga doble funcion (insertar y modificar). Y para el metodo de eliminar solo bastara con un boton que elimine el elemento seleccionado de la tabla.
+
+[33mcommit 63ee594fc7ef8376011ced8f35a6949f8e22d1cb[m
+Author: FAUSTO ISRAEL GARCIA GARCIA <fausto.garcia@alumnos.udg.mx>
+Date:   Tue Sep 8 22:02:04 2020 -0500
+
+    Se integraron componentes a la interfaz [Directory]. Elemento principal: Tabla. Elementos secundarios: 3 textField para los datos de prueba y un botón para agregar los datos a la tabla. Además se integran una clase en el package [model] Directory para el proceso de captura de datos para ser incrustados en la tabla.
+
+[33mcommit b999d5505ffa1c4c8a3a8cff93f3b1349c408070[m
+Author: Fausto <fausto.garcia@alumnos.udg.mx>
+Date:   Sun Sep 6 14:18:20 2020 -0500
+
+    Creación de un proyecto. Se agregaron los packages: controller, view y model. Los package basicos para un modelo vista controlador

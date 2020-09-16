@@ -8,7 +8,8 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="StratosAccounts.jar" size="8874" download="eager" />
+    <jar href="StratosAccounts.jar" size="11360" download="eager" />
+    <jar href="lib\mysql-connector-java-8.0.21.jar" size="2397321" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="controller.Main"  name="StratosAccounts" />
   <update check="always"/>

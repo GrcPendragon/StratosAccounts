@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,6 +28,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Directory;
 
 /**
@@ -62,7 +64,7 @@ public class DirectoryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         directorio = FXCollections.observableArrayList();
-
+                
         this.colPagina.setCellValueFactory(new PropertyValueFactory("pagina"));
         this.colUsuario.setCellValueFactory(new PropertyValueFactory("usuario"));
         this.colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
